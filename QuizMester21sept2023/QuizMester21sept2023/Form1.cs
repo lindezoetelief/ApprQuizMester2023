@@ -17,6 +17,7 @@ namespace QuizMester21sept2023
 
         bool executeOke = false;
 
+        int dtInt = 0;
         public Form1()
         {
             InitializeComponent();
@@ -39,20 +40,26 @@ namespace QuizMester21sept2023
                 // Datatable with the name dt checking for users
                 using (DataTable dt = new DataTable("Users"))
                 {
-                    using (SqlCommand cmd = new SqlCommand("Select * from Users where username = @username;", cn))
+                    using (SqlCommand cmd = new SqlCommand("Select * from Users where username = @username AND password = @password;", cn))
                     {
                         cmd.Parameters.AddWithValue("username", tbxUsername.Text);
+                        cmd.Parameters.AddWithValue("password", tbxPassword.Text);
                         SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                        adapter.Fill(dt);
-
+                        dtInt = adapter.Fill(dt);
                     }
                 }
             }
-            if (dt = !null)
+            if (dtInt == 1)
             {
                 executeOke = true;
+                lblLoginText.Text = "ja";
             }
-            return executeOke;
+            else
+            {
+                lblLoginText.Text = "nee";
+
+            }
+            //return executeOke;
         }
     }
 }
