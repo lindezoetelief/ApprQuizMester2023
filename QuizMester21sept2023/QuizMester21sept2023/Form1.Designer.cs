@@ -36,6 +36,8 @@
             this.lblPassword = new System.Windows.Forms.Label();
             this.lblLoginText = new System.Windows.Forms.Label();
             this.pcbLoginImage = new System.Windows.Forms.PictureBox();
+            this.lblRegisterText = new System.Windows.Forms.Label();
+            this.btnGoToRegister = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pcbLoginImage)).BeginInit();
             this.SuspendLayout();
             // 
@@ -116,12 +118,42 @@
             this.pcbLoginImage.TabIndex = 6;
             this.pcbLoginImage.TabStop = false;
             // 
+            // lblRegisterText
+            // 
+            this.lblRegisterText.AutoSize = true;
+            this.lblRegisterText.BackColor = System.Drawing.Color.Ivory;
+            this.lblRegisterText.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRegisterText.ForeColor = System.Drawing.Color.DarkSlateGray;
+            this.lblRegisterText.Location = new System.Drawing.Point(479, 359);
+            this.lblRegisterText.Name = "lblRegisterText";
+            this.lblRegisterText.Size = new System.Drawing.Size(212, 20);
+            this.lblRegisterText.TabIndex = 7;
+            this.lblRegisterText.Text = "Don\'t have an account yet?";
+            // 
+            // btnGoToRegister
+            // 
+            this.btnGoToRegister.BackColor = System.Drawing.Color.Transparent;
+            this.btnGoToRegister.FlatAppearance.BorderSize = 0;
+            this.btnGoToRegister.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnGoToRegister.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGoToRegister.ForeColor = System.Drawing.Color.DarkSlateGray;
+            this.btnGoToRegister.Location = new System.Drawing.Point(450, 379);
+            this.btnGoToRegister.Margin = new System.Windows.Forms.Padding(0);
+            this.btnGoToRegister.Name = "btnGoToRegister";
+            this.btnGoToRegister.Size = new System.Drawing.Size(128, 30);
+            this.btnGoToRegister.TabIndex = 8;
+            this.btnGoToRegister.Text = "register";
+            this.btnGoToRegister.UseVisualStyleBackColor = false;
+            this.btnGoToRegister.Click += new System.EventHandler(this.btnGoToRegister_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Ivory;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnGoToRegister);
+            this.Controls.Add(this.lblRegisterText);
             this.Controls.Add(this.pcbLoginImage);
             this.Controls.Add(this.lblLoginText);
             this.Controls.Add(this.lblPassword);
@@ -146,6 +178,8 @@
         private System.Windows.Forms.Label lblPassword;
         private System.Windows.Forms.Label lblLoginText;
         private System.Windows.Forms.PictureBox pcbLoginImage;
+        private System.Windows.Forms.Label lblRegisterText;
+        private System.Windows.Forms.Button btnGoToRegister;
     }
 }
 

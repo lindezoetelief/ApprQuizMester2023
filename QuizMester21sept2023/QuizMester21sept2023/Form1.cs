@@ -8,16 +8,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace QuizMester21sept2023
 {
     public partial class Form1 : Form
     {
-        string connectionString = "Data Source=localhost\\sqlexpress;Initial Catalog=QuizMesterDatabase;Integrated Security=True";
 
-        bool executeOke = false;
+        List<Database> databaseList = null;
 
-        int dtInt = 0;
+        //Forms
+        Form2 registerForm = new Form2();
+        Form3 playForm = new Form3();
+        Form4 highscoreForm = new Form4();  
+
         public Form1()
         {
             InitializeComponent();
@@ -25,41 +29,27 @@ namespace QuizMester21sept2023
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
+            databaseList = new List<Database>();
+            databaseList.Add(new Database(tbxUsername.Text, tbxPassword.Text));
 
-            executeOke = false;
-            /// Search the database for the given credentials
-            using (SqlConnection cn = new SqlConnection(connectionString))
+            foreach (Database item in databaseList)
             {
-                // Check if there is a database connection open
-                if (cn.State == ConnectionState.Closed)
+                if (item.GetLogin() == true)
                 {
-                    // Open a database connection if one cannot be found
-                    cn.Open();
+                    this.Hide();
+                    playForm.Show();
                 }
-
-                // Datatable with the name dt checking for users
-                using (DataTable dt = new DataTable("Users"))
+                else
                 {
-                    using (SqlCommand cmd = new SqlCommand("Select * from Users where username = @username AND password = @password;", cn))
-                    {
-                        cmd.Parameters.AddWithValue("username", tbxUsername.Text);
-                        cmd.Parameters.AddWithValue("password", tbxPassword.Text);
-                        SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                        dtInt = adapter.Fill(dt);
-                    }
+                    MessageBox.Show("Loggin failed, try again or register");
                 }
             }
-            if (dtInt == 1)
-            {
-                executeOke = true;
-                lblLoginText.Text = "ja";
-            }
-            else
-            {
-                lblLoginText.Text = "nee";
+        }
 
-            }
-            //return executeOke;
+        private void btnGoToRegister_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            registerForm.Show();
         }
     }
 }

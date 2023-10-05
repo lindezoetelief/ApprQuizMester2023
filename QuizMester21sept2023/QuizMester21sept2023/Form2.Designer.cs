@@ -112,6 +112,7 @@
             this.btnRegister.Text = "Register";
             this.btnRegister.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnRegister.UseVisualStyleBackColor = false;
+            this.btnRegister.Click += new System.EventHandler(this.btnRegister_Click);
             // 
             // Form2
             // 
