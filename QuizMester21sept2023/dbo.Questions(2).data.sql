@@ -1,0 +1,22 @@
+﻿INSERT INTO [dbo].[Questions] ([questionID], [question], [correctAnswer], [falseAnswerOne], [falseAnswerTwo], [falseAnswerThree], [questionType])
+VALUES 
+(1, 'What is a group of cats called?', 'A clowder', 'Parliament', 'Flock', 'Gaggle', 'animals'),
+(2, 'What is a group of dogs called?', 'A pack', 'A herd', 'A flock', 'A gaggle', 'animals'),
+(3, 'What is the national animal of Australia?', 'Kangaroo', 'Koala', 'Emu', 'Platypus', 'animals'),
+(4, 'What is the largest species of penguin?', 'Emperor penguin', 'Adélie penguin', 'King penguin', 'Chinstrap penguin', 'animals'),
+(5, 'What is the world''s smallest mammal?', 'Bumblebee bat', 'Pygmy shrew', 'Etruscan shrew', 'Least weasel', 'animals'),
+(6, 'What is the collective term for a group of owls?', 'A parliament', 'A congress', 'A flock', 'A herd', 'animals'),
+(7, 'Which big cat is known for its distinct black mane?', 'Lion', 'Tiger', 'Leopard', 'Cheetah', 'animals'),
+(8, 'What is the largest species of bear?', 'Polar bear', 'Grizzly bear', 'Kodiak bear', 'Brown bear', 'animals'),
+(9, 'What is the only mammal capable of flight?', 'Bat', 'Flying squirrel', 'Pegasus', 'Sparrow', 'animals'),
+(10, 'What is the national bird of New Zealand?', 'Kiwi', 'Kakapo', 'Tui', 'Kaka', 'animals'),
+(11, 'What is the largest living species of fish?', 'Whale shark', 'Great white shark', 'Manta ray', 'Basking shark', 'animals'),
+(12, 'What is the smallest breed of dog?', 'Chihuahua', 'Dachshund', 'Pomeranian', 'Shih Tzu', 'animals'),
+(13, 'What is a group of kangaroos called?', 'A mob', 'A herd', 'A pack', 'A troop', 'animals'),
+(14, 'What is the fastest land mammal?', 'Cheetah', 'Lion', 'Gazelle', 'Leopard', 'animals'),
+(15, 'What is the national bird of India?', 'Indian peacock', 'Bengal florican', 'Indian roller', 'Indian vulture', 'animals'),
+(16, 'What is the tallest land animal?', 'Giraffe', 'Elephant', 'Hippopotamus', 'Rhinoceros', 'animals'),
+(17, 'What is the smallest species of whale?', 'Dwarf sperm whale', 'Blue whale', 'Beluga whale', 'Humpback whale', 'animals'),
+(18, 'What is a group of ravens called?', 'An unkindness', 'A murder', 'A flock', 'A parliament', 'animals'),
+(19, 'What is the national marine mammal of the United States?', 'Manatee', 'Dolphin', 'Sea otter', 'Seal', 'animals'),
+(20, 'What is the largest species of big cat?', 'Tiger', 'Lion', 'Leopard', 'Jaguar', 'animals');
