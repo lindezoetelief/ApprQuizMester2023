@@ -18,13 +18,18 @@ namespace QuizMester21sept2023
         List<Database> databaseList = null;
 
         //Forms
-        Form2 registerForm = new Form2();
+        Form2 registerForm = null;
         Form3 playForm = new Form3();
         Form4 highscoreForm = new Form4();  
 
         public Form1()
         {
             InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            registerForm = new Form2(this);
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -51,5 +56,7 @@ namespace QuizMester21sept2023
             this.Hide();
             registerForm.Show();
         }
+
+       
     }
 }

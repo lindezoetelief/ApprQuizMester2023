@@ -17,9 +17,11 @@ namespace QuizMester21sept2023
         // Declare variables
         // Current score, time left, correct/wrong answer values are all saved in an int
         int currentScore = 0;
-        int timeLeft = 10;
+        int timeLeft = 30;
         int correctAnswers = 0;
         int wrongAnswers = 0;
+
+        string selectedAnswer = "";
 
         // Get the questions from a class (Question.cs) and the database
         private List<Questions> questions = new List<Questions>();
@@ -48,6 +50,11 @@ namespace QuizMester21sept2023
             lblQuestion.Top = btnAnswerA.Top - lblQuestion.Height - 20;
 
             lblCurrentScore.Text = currentScore.ToString();
+
+            //Always start at 30 seconds
+            tmrTimeLeft.Stop();
+            timeLeft = 30;
+
             //ClearSelection();
             lblScoreIndicator.Text = "";
             lblTimeLeft.Text = timeLeft.ToString();
@@ -162,8 +169,7 @@ namespace QuizMester21sept2023
             timeLeft--;
             // Add the user's time left as a string into the form
             lblTimeLeft.Text = timeLeft.ToString();
-            // Remove the score indicator every second
-            lblScoreIndicator.Text = "";
+      
             // Check if the user has ran out of time
             if (timeLeft == 0)
             {
@@ -188,39 +194,9 @@ namespace QuizMester21sept2023
             tmrTimeLeft.Start();
 
             // Evaluate the selected answer and save it into the string
-            string selectedAnswer = btnAnswerA.Text;
+            selectedAnswer = btnAnswerA.Text;
 
-            // Check if the answer was correct by getting the .CorrectAnswer value and comparing
-            if (selectedAnswer == questions[currentQuestionIndex].CorrectAnswer)
-            {
-                // Increment the user's current score by 15 points
-                currentScore += 15;
-                // Add the user's current score into the score label (convert int to string)
-                lblCurrentScore.Text = currentScore.ToString();
-                // Display how many points the user got underneath the score indicator
-                lblScoreIndicator.Text = "+15";
-                lblScoreIndicator.ForeColor = Color.Green;
-                // Increment the user's correct answers by 1
-                correctAnswers += 1;
-            }
-            else
-            {
-                // Decrement the user's current score by 25 points
-                currentScore -= 25;
-                // Add the user's current score into the score label (convert int to string)
-                lblCurrentScore.Text = currentScore.ToString();
-                // Display how many points the user got underneath the score indicator
-                lblScoreIndicator.Text = "-25";
-                lblScoreIndicator.ForeColor = Color.Red;
-                // Increment the user's wrong answers by 1
-                wrongAnswers += 1;
-            }
-
-
-            // Increment the question index, clear all selections, display a new question
-            currentQuestionIndex++;
-
-            DisplayQuestion();
+            CheckAnswer();
         }
 
         private void btnAnswerB_Click(object sender, EventArgs e)
@@ -229,39 +205,9 @@ namespace QuizMester21sept2023
             tmrTimeLeft.Start();
 
             // Evaluate the selected answer and save it into the string
-            string selectedAnswer = btnAnswerB.Text;
+            selectedAnswer = btnAnswerB.Text;
 
-            // Check if the answer was correct by getting the .CorrectAnswer value and comparing
-            if (selectedAnswer == questions[currentQuestionIndex].CorrectAnswer)
-            {
-                // Increment the user's current score by 15 points
-                currentScore += 15;
-                // Add the user's current score into the score label (convert int to string)
-                lblCurrentScore.Text = currentScore.ToString();
-                // Display how many points the user got underneath the score indicator
-                lblScoreIndicator.Text = "+15";
-                lblScoreIndicator.ForeColor = Color.Green;
-                // Increment the user's correct answers by 1
-                correctAnswers += 1;
-            }
-            else
-            {
-                // Decrement the user's current score by 25 points
-                currentScore -= 25;
-                // Add the user's current score into the score label (convert int to string)
-                lblCurrentScore.Text = currentScore.ToString();
-                // Display how many points the user got underneath the score indicator
-                lblScoreIndicator.Text = "-25";
-                lblScoreIndicator.ForeColor = Color.Red;
-                // Increment the user's wrong answers by 1
-                wrongAnswers += 1;
-            }
-
-
-            // Increment the question index, clear all selections, display a new question
-            currentQuestionIndex++;
-
-            DisplayQuestion();
+            CheckAnswer();
         }
 
         private void btnAnswerC_Click(object sender, EventArgs e)
@@ -270,39 +216,9 @@ namespace QuizMester21sept2023
             tmrTimeLeft.Start();
 
             // Evaluate the selected answer and save it into the string
-            string selectedAnswer = btnAnswerC.Text;
+            selectedAnswer = btnAnswerC.Text;
 
-            // Check if the answer was correct by getting the .CorrectAnswer value and comparing
-            if (selectedAnswer == questions[currentQuestionIndex].CorrectAnswer)
-            {
-                // Increment the user's current score by 15 points
-                currentScore += 15;
-                // Add the user's current score into the score label (convert int to string)
-                lblCurrentScore.Text = currentScore.ToString();
-                // Display how many points the user got underneath the score indicator
-                lblScoreIndicator.Text = "+15";
-                lblScoreIndicator.ForeColor = Color.Green;
-                // Increment the user's correct answers by 1
-                correctAnswers += 1;
-            }
-            else
-            {
-                // Decrement the user's current score by 25 points
-                currentScore -= 25;
-                // Add the user's current score into the score label (convert int to string)
-                lblCurrentScore.Text = currentScore.ToString();
-                // Display how many points the user got underneath the score indicator
-                lblScoreIndicator.Text = "-25";
-                lblScoreIndicator.ForeColor = Color.Red;
-                // Increment the user's wrong answers by 1
-                wrongAnswers += 1;
-            }
-
-
-            // Increment the question index, clear all selections, display a new question
-            currentQuestionIndex++;
-
-            DisplayQuestion();
+            CheckAnswer();
         }
 
         private void btnAnswerD_Click(object sender, EventArgs e)
@@ -311,17 +227,22 @@ namespace QuizMester21sept2023
             tmrTimeLeft.Start();
 
             // Evaluate the selected answer and save it into the string
-            string selectedAnswer = btnAnswerD.Text;
+            selectedAnswer = btnAnswerD.Text;
 
+            CheckAnswer();
+        }
+
+        private void CheckAnswer()
+        {
             // Check if the answer was correct by getting the .CorrectAnswer value and comparing
             if (selectedAnswer == questions[currentQuestionIndex].CorrectAnswer)
             {
-                // Increment the user's current score by 15 points
-                currentScore += 15;
+                // Increment the user's current score by 1 points
+                currentScore++;
                 // Add the user's current score into the score label (convert int to string)
                 lblCurrentScore.Text = currentScore.ToString();
                 // Display how many points the user got underneath the score indicator
-                lblScoreIndicator.Text = "+15";
+                lblScoreIndicator.Text = "+ 1";
                 lblScoreIndicator.ForeColor = Color.Green;
                 // Increment the user's correct answers by 1
                 correctAnswers += 1;
@@ -329,11 +250,11 @@ namespace QuizMester21sept2023
             else
             {
                 // Decrement the user's current score by 25 points
-                currentScore -= 25;
+                currentScore--;
                 // Add the user's current score into the score label (convert int to string)
                 lblCurrentScore.Text = currentScore.ToString();
                 // Display how many points the user got underneath the score indicator
-                lblScoreIndicator.Text = "-25";
+                lblScoreIndicator.Text = "- 1";
                 lblScoreIndicator.ForeColor = Color.Red;
                 // Increment the user's wrong answers by 1
                 wrongAnswers += 1;

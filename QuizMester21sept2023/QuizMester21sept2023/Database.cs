@@ -138,5 +138,11 @@ namespace QuizMester21sept2023
                 MessageBox.Show("Username already exist");
             }
         }
+
+        // After account is created succesfully player is directed to the playform (executeOke == true)
+        public bool RegisterLogin()
+        {
+            return executeOke;
+        }
     }
 }

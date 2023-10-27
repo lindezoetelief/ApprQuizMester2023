@@ -134,13 +134,15 @@
             // 
             this.btnGoToRegister.BackColor = System.Drawing.Color.Transparent;
             this.btnGoToRegister.FlatAppearance.BorderSize = 0;
+            this.btnGoToRegister.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.btnGoToRegister.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.btnGoToRegister.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGoToRegister.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnGoToRegister.ForeColor = System.Drawing.Color.DarkSlateGray;
-            this.btnGoToRegister.Location = new System.Drawing.Point(450, 379);
+            this.btnGoToRegister.Location = new System.Drawing.Point(459, 379);
             this.btnGoToRegister.Margin = new System.Windows.Forms.Padding(0);
             this.btnGoToRegister.Name = "btnGoToRegister";
-            this.btnGoToRegister.Size = new System.Drawing.Size(128, 30);
+            this.btnGoToRegister.Size = new System.Drawing.Size(128, 37);
             this.btnGoToRegister.TabIndex = 8;
             this.btnGoToRegister.Text = "register";
             this.btnGoToRegister.UseVisualStyleBackColor = false;
@@ -163,6 +165,7 @@
             this.Controls.Add(this.btnLogin);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pcbLoginImage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

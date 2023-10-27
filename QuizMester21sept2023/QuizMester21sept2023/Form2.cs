@@ -16,9 +16,15 @@ namespace QuizMester21sept2023
 
         List<Database> databaseList = null;
 
-        public Form2()
+        //Forms
+        Form1 loginForm = null;
+        Form3 playForm = new Form3();
+        //Form4 highscoreForm = new Form4();
+
+        public Form2(Form1 c_loginForm)
         {
             InitializeComponent();
+            loginForm = c_loginForm;
         }
 
         private void btnRegister_Click(object sender, EventArgs e)
@@ -29,7 +35,19 @@ namespace QuizMester21sept2023
             foreach (Database item in databaseList)
             {
                 item.GetRegister();
+
+                if (item.RegisterLogin() == true)
+                {
+                    this.Hide();
+                    playForm.Show();
+                }
             }
+        }
+
+        private void btnGoToLogin_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            loginForm.Show();
         }
     }
 }

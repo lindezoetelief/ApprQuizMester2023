@@ -36,6 +36,8 @@
             this.lblUsernameRegister = new System.Windows.Forms.Label();
             this.lblPasswordRegister = new System.Windows.Forms.Label();
             this.btnRegister = new System.Windows.Forms.Button();
+            this.lblLoginText = new System.Windows.Forms.Label();
+            this.btnGoToLogin = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -114,12 +116,44 @@
             this.btnRegister.UseVisualStyleBackColor = false;
             this.btnRegister.Click += new System.EventHandler(this.btnRegister_Click);
             // 
+            // lblLoginText
+            // 
+            this.lblLoginText.AutoSize = true;
+            this.lblLoginText.BackColor = System.Drawing.Color.Ivory;
+            this.lblLoginText.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLoginText.ForeColor = System.Drawing.Color.DarkSlateGray;
+            this.lblLoginText.Location = new System.Drawing.Point(467, 367);
+            this.lblLoginText.Name = "lblLoginText";
+            this.lblLoginText.Size = new System.Drawing.Size(201, 20);
+            this.lblLoginText.TabIndex = 8;
+            this.lblLoginText.Text = "Already have an account?";
+            // 
+            // btnGoToLogin
+            // 
+            this.btnGoToLogin.BackColor = System.Drawing.Color.Transparent;
+            this.btnGoToLogin.FlatAppearance.BorderSize = 0;
+            this.btnGoToLogin.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.btnGoToLogin.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.btnGoToLogin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnGoToLogin.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGoToLogin.ForeColor = System.Drawing.Color.DarkSlateGray;
+            this.btnGoToLogin.Location = new System.Drawing.Point(447, 387);
+            this.btnGoToLogin.Margin = new System.Windows.Forms.Padding(0);
+            this.btnGoToLogin.Name = "btnGoToLogin";
+            this.btnGoToLogin.Size = new System.Drawing.Size(128, 37);
+            this.btnGoToLogin.TabIndex = 9;
+            this.btnGoToLogin.Text = "Login";
+            this.btnGoToLogin.UseVisualStyleBackColor = false;
+            this.btnGoToLogin.Click += new System.EventHandler(this.btnGoToLogin_Click);
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Ivory;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnGoToLogin);
+            this.Controls.Add(this.lblLoginText);
             this.Controls.Add(this.btnRegister);
             this.Controls.Add(this.lblPasswordRegister);
             this.Controls.Add(this.lblUsernameRegister);
@@ -144,5 +178,7 @@
         private System.Windows.Forms.Label lblUsernameRegister;
         private System.Windows.Forms.Label lblPasswordRegister;
         private System.Windows.Forms.Button btnRegister;
+        private System.Windows.Forms.Label lblLoginText;
+        private System.Windows.Forms.Button btnGoToLogin;
     }
 }

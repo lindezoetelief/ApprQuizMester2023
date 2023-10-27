@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.lblPlayText = new System.Windows.Forms.Label();
             this.lblQuestion = new System.Windows.Forms.Label();
             this.btnAnswerA = new System.Windows.Forms.Button();
             this.btnAnswerB = new System.Windows.Forms.Button();
@@ -40,18 +39,6 @@
             this.lblTimeLeft = new System.Windows.Forms.Label();
             this.tmrTimeLeft = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
-            // 
-            // lblPlayText
-            // 
-            this.lblPlayText.AutoSize = true;
-            this.lblPlayText.BackColor = System.Drawing.Color.Ivory;
-            this.lblPlayText.Font = new System.Drawing.Font("Microsoft Sans Serif", 28.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPlayText.ForeColor = System.Drawing.Color.DarkSlateGray;
-            this.lblPlayText.Location = new System.Drawing.Point(334, 46);
-            this.lblPlayText.Name = "lblPlayText";
-            this.lblPlayText.Size = new System.Drawing.Size(114, 54);
-            this.lblPlayText.TabIndex = 6;
-            this.lblPlayText.Text = "Play";
             // 
             // lblQuestion
             // 
@@ -149,6 +136,12 @@
             this.lblTimeLeft.TabIndex = 14;
             this.lblTimeLeft.Text = "time";
             // 
+            // tmrTimeLeft
+            // 
+            this.tmrTimeLeft.Enabled = true;
+            this.tmrTimeLeft.Interval = 1000;
+            this.tmrTimeLeft.Tick += new System.EventHandler(this.tmrTimeLeft_Tick);
+            // 
             // Form3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -163,7 +156,6 @@
             this.Controls.Add(this.btnAnswerB);
             this.Controls.Add(this.btnAnswerA);
             this.Controls.Add(this.lblQuestion);
-            this.Controls.Add(this.lblPlayText);
             this.Name = "Form3";
             this.Text = "Form3";
             this.Load += new System.EventHandler(this.Form3_Load);
@@ -173,8 +165,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Label lblPlayText;
         private System.Windows.Forms.Label lblQuestion;
         private System.Windows.Forms.Button btnAnswerA;
         private System.Windows.Forms.Button btnAnswerB;

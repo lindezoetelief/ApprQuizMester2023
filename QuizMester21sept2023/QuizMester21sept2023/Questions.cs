@@ -12,20 +12,6 @@ namespace QuizMester21sept2023
 {
     internal class Questions
     {
-
-
-        //public string Text { get; }
-        //public List<string> Options { get; }
-        //public string CorrectAnswer { get; }
-
-        //public Questions(string text, List<string> options, string correctAnswer)
-        //{
-        //    Text = text;
-        //    Options = options;
-        //    CorrectAnswer = correctAnswer;
-        //}
-
-
         public string Question { get; }
 
         public List<string> Options { get; }
