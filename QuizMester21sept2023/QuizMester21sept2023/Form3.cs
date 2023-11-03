@@ -5,9 +5,11 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace QuizMester21sept2023
 {
@@ -22,6 +24,10 @@ namespace QuizMester21sept2023
         int wrongAnswers = 0;
 
         string selectedAnswer = "";
+
+        DataTable dt = null;
+
+        int maxNumber = 0;
 
         // Get the questions from a class (Question.cs) and the database
         private List<Questions> questions = new List<Questions>();
@@ -82,7 +88,6 @@ namespace QuizMester21sept2023
                         // While the reader is active
                         while (reader.Read())
                         {
-                            // Fetch all data from the row the query was executed on
                             string question = reader.GetString(0);
                             string falseAnswerOne = reader.GetString(1);
                             string falseAnswerTwo = reader.GetString(2);
@@ -90,48 +95,30 @@ namespace QuizMester21sept2023
                             string correctAnswer = reader.GetString(4);
 
                             // Save the data into a List item
-                            List<string> options = new List<string>();
+                            List<string> options = new List<string>
+                            {
+                                falseAnswerOne,
+                                falseAnswerTwo,
+                                falseAnswerThree,
+                                correctAnswer
+                            };
 
-                            options.Add(falseAnswerOne);
-                            options.Add(falseAnswerTwo);
-                            options.Add(falseAnswerThree);
-                            options.Add(correctAnswer);
-
-                            Random random = new Random();
+                            // Shuffle the options randomly
+                            Random rng = new Random();
                             int n = options.Count;
 
-                            for (int i = options.Count; i < 4; i--)
+                            while (n > 1)
                             {
-                                int rnd = random.Next(i + 1);
-
-                                var value = options[rnd];
-                                options[rnd] = options[i];
-                                options[i] = value;
+                                n--;
+                                int k = rng.Next(n + 1);
+                                string value = options[k];
+                                options[k] = options[n];
+                                options[n] = value;
                             }
-                            List<string> optionList = new List<string>();
-                            optionList = options;
 
-                            
-                            //// Shuffle the options randomly
-                            //Random rng = new Random();
-                            //int optionCount = options.Count;
-                            //// While there is more than 1 option, shuffle the questions randomly
-                            //while (optionCount > 1)
-                            //{
-                            //    // Decrement the options amount
-                            //    optionCount--;
-                            //    // Declare a next option by returning a non-negative int
-                            //    // and increment 1 to the total amount
-                            //    int optionNext = rng.Next(optionCount + 1);
-                            //    // Save the value of the next option
-                            //    string value = options[optionNext];
-                            //    options[optionNext] = options[optionNext];
-                            //    // Save the options into the value variable
-                            //    options[optionNext] = value;
-                            //}
-                            // Save the question as an object, add the previous data into the object
-                            Questions questionObject = new Questions(question, optionList, correctAnswer);
-                            questions.Add(questionObject);                           
+                            // Save the question as an object and add the previous data into the object
+                            Questions questionObject = new Questions(question, options, correctAnswer);
+                            questions.Add(questionObject);
                         }
                     }
                 }
@@ -146,19 +133,106 @@ namespace QuizMester21sept2023
             {
                 // Get the previously added data from the questions object at the selected question index
                 Questions question = questions[currentQuestionIndex];
+
+                // Shuffle the options for the current question
+                ShuffleOptions(question.Options);
+
                 // Add the data to the form elements
                 lblQuestion.Text = question.Question;
                 btnAnswerA.Text = question.Options[0];
                 btnAnswerB.Text = question.Options[1];
                 btnAnswerC.Text = question.Options[2];
                 btnAnswerD.Text = question.Options[3];
-
-                //MessageBox.Show(question.Options[0]);
             }
             else
             {
                 // Show a MessageBox saying the quiz has been completed (unlikely)
-                MessageBox.Show("Quiz completed!");
+                MessageBox.Show("Quiz completed! Your end score: " + currentScore + " points");
+                tmrTimeLeft.Stop();
+                SetScore();
+            }
+        }
+
+        private void SetScore()
+        {
+            string connectionString = "Data Source=localhost\\sqlexpress;Initial Catalog=QuizMesterDatabase;Integrated Security=True";
+
+            using (SqlConnection cn = new SqlConnection(connectionString))
+            {
+                if (cn.State == ConnectionState.Closed)
+                {
+                    cn.Open();
+                }
+
+                // Find the max rankingID
+                int maxNumber;
+                using (SqlCommand cmd = new SqlCommand("SELECT MAX(rankingID) FROM QuizRankings", cn))
+                {
+                    maxNumber = Convert.ToInt32(cmd.ExecuteScalar()) + 1;
+                }
+
+                // Use the new maxNumber as the rankingID in an INSERT statement for the new ranking
+                using (SqlCommand cmd = new SqlCommand("INSERT INTO QuizRankings (rankingID, userID, quizID, score, dateDone) VALUES (@rankingID, @userID, @quizID, @score, @dateDone)", cn))
+                {
+                    cmd.Parameters.AddWithValue("@rankingID", maxNumber);
+                    cmd.Parameters.AddWithValue("@userID", Convert.ToInt32(dt.Rows[0]["userID"]));
+                    cmd.Parameters.AddWithValue("@quizID", "-");
+                    cmd.Parameters.AddWithValue("@score", currentScore);
+                    cmd.Parameters.AddWithValue("@dateDone", DateTime.Now);
+
+                    cmd.ExecuteNonQuery(); // Execute the INSERT statement
+                }
+            }
+                //string connectionString = "Data Source=localhost\\sqlexpress;Initial Catalog=QuizMesterDatabase;Integrated Security=True";
+
+                //using (SqlConnection cn = new SqlConnection(connectionString))
+                //{
+                //    if (cn.State == ConnectionState.Closed)
+                //    {
+                //        cn.Open();
+                //    }
+
+
+                //    //Use Datatable
+                //    using (dt = new DataTable("QuizRankings"))
+                //    {
+                //        ////For a new Rankingid fisrt search for current maximum Rankingid
+                //        using (SqlCommand cmd = new SqlCommand("SELECT MAX(rankingID) FROM QuizRankings", cn))
+                //        {
+                //            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+
+                //            //Get a new Userid
+                //            maxNumber = Convert.ToInt32(cmd.ExecuteScalar()) + 1;
+                //        }
+
+                //        //Use the new maxNumber as new Rankingid in an INSERT statement for the new ranking
+                //        using (SqlCommand cmd = new SqlCommand("INSERT INTO QuizRankings(rankingID, userID, quizID, score, dateDone) VALUES (@rankingID, @userID, @quizID, @score, @dateDone)", cn))
+                //        {
+                //            cmd.Parameters.AddWithValue("rankingID", maxNumber);
+                //            cmd.Parameters.AddWithValue("userID", "-");
+                //            cmd.Parameters.AddWithValue("quizID", "-");
+                //            cmd.Parameters.AddWithValue("score", currentScore);
+                //            cmd.Parameters.AddWithValue("dateDone", DateTime.Now);
+                //            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                //            adapter.Fill(dt);
+                //        }
+                //    }
+                //}
+
+            }
+
+        private void ShuffleOptions(List<string> options)
+        {
+            Random rng = new Random();
+            int n = options.Count;
+
+            while (n > 1)
+            {
+                n--;
+                int k = rng.Next(n + 1);
+                string value = options[k];
+                options[k] = options[n];
+                options[n] = value;
             }
         }
 
@@ -176,7 +250,9 @@ namespace QuizMester21sept2023
                 // Stop the timer
                 tmrTimeLeft.Stop();
                 // Show a message saying the time has ran out
-                MessageBox.Show("Time's up, game over");
+                MessageBox.Show("Time's up, game over Your end score: " + currentScore + " points");
+
+                //tmrTimeLeft.Stop();
                 //// Hide the quiz panel, display the data behind it
                 //pnlQuizFinished.Visible = false;
                 //// Add the user's data into the quiz' final data
