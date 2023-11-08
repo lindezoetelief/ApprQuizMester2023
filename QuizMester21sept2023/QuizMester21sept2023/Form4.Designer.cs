@@ -36,6 +36,7 @@
             this.lblRankThree = new System.Windows.Forms.Label();
             this.lblRankFour = new System.Windows.Forms.Label();
             this.lblRankFive = new System.Windows.Forms.Label();
+            this.rtbxHighscores = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // lblPlayText
@@ -127,12 +128,21 @@
             this.lblRankFive.TabIndex = 14;
             this.lblRankFive.Text = "#5";
             // 
+            // rtbxHighscores
+            // 
+            this.rtbxHighscores.Location = new System.Drawing.Point(239, 184);
+            this.rtbxHighscores.Name = "rtbxHighscores";
+            this.rtbxHighscores.Size = new System.Drawing.Size(361, 96);
+            this.rtbxHighscores.TabIndex = 15;
+            this.rtbxHighscores.Text = "";
+            // 
             // Form4
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Ivory;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.rtbxHighscores);
             this.Controls.Add(this.lblRankFive);
             this.Controls.Add(this.lblRankFour);
             this.Controls.Add(this.lblRankThree);
@@ -158,5 +168,6 @@
         private System.Windows.Forms.Label lblRankThree;
         private System.Windows.Forms.Label lblRankFour;
         private System.Windows.Forms.Label lblRankFive;
+        private System.Windows.Forms.RichTextBox rtbxHighscores;
     }
 }

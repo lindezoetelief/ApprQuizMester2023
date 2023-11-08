@@ -10,6 +10,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+// For audio
+using System.IO;
+using System.Runtime.InteropServices;
+using QuizMester21sept2023.Properties;
+using static System.Windows.Forms.LinkLabel;
+using System.Xml.Linq;
+using System.Media;
 
 namespace QuizMester21sept2023
 {
@@ -17,22 +24,28 @@ namespace QuizMester21sept2023
     {
 
         // Declare variables
-        // Current score, time left, correct/wrong answer values are all saved in an int
         int currentScore = 0;
         int timeLeft = 30;
         int correctAnswers = 0;
         int wrongAnswers = 0;
 
+        bool removeUsed = false;
+
         string selectedAnswer = "";
 
-        DataTable dt = null;
+        bool specialQuestionIsActive = false; 
 
-        int maxNumber = 0;
+        DataTable dt = null;
 
         // Get the questions from a class (Question.cs) and the database
         private List<Questions> questions = new List<Questions>();
 
-      
+        // Get random number for the special question, between 1 and 21
+        Random random = new Random();
+        int randomNumber = 0;
+
+        //Forms
+        Form5 specialQuizForm = new Form5();
 
         private int currentQuestionIndex = 0;
 
@@ -64,6 +77,16 @@ namespace QuizMester21sept2023
             //ClearSelection();
             lblScoreIndicator.Text = "";
             lblTimeLeft.Text = timeLeft.ToString();
+
+            randomNumber = random.Next(1, 21);
+
+            // Default design
+            btnAnswerA.BackColor = Color.DarkSlateGray;
+            btnAnswerB.BackColor = Color.DarkSlateGray;
+            btnAnswerC.BackColor = Color.DarkSlateGray;
+            btnAnswerD.BackColor = Color.DarkSlateGray;
+            lblQuestion.ForeColor = Color.DarkSlateGray;
+            pbxSpecialQuestion.Image = null;
         }
 
         private void LoadQuestionsFromDatabase()
@@ -94,6 +117,7 @@ namespace QuizMester21sept2023
                             string falseAnswerThree = reader.GetString(3);
                             string correctAnswer = reader.GetString(4);
 
+
                             // Save the data into a List item
                             List<string> options = new List<string>
                             {
@@ -102,19 +126,6 @@ namespace QuizMester21sept2023
                                 falseAnswerThree,
                                 correctAnswer
                             };
-
-                            // Shuffle the options randomly
-                            Random rng = new Random();
-                            int n = options.Count;
-
-                            while (n > 1)
-                            {
-                                n--;
-                                int k = rng.Next(n + 1);
-                                string value = options[k];
-                                options[k] = options[n];
-                                options[n] = value;
-                            }
 
                             // Save the question as an object and add the previous data into the object
                             Questions questionObject = new Questions(question, options, correctAnswer);
@@ -128,27 +139,99 @@ namespace QuizMester21sept2023
 
         private void DisplayQuestion()
         {
+            // Default design
+            btnAnswerA.BackColor = Color.DarkSlateGray;
+            btnAnswerB.BackColor = Color.DarkSlateGray;
+            btnAnswerC.BackColor = Color.DarkSlateGray;
+            btnAnswerD.BackColor = Color.DarkSlateGray;
+            lblQuestion.ForeColor = Color.DarkSlateGray;
+            pbxSpecialQuestion.Image = null;
+
+
+            string soundFilePath = "C:\\Users\\linde\\OneDrive\\Documents\\Appr\\Quizmester\\ApprQuizMester2023\\QuizMester21sept2023\\QuizMester21sept2023\\Resources\\special-song.wav";
+            SoundPlayer player = null;
+
             // Check if there are any questions left
             if (currentQuestionIndex < questions.Count)
             {
+
+                specialQuestionIsActive = false;
+
+
                 // Get the previously added data from the questions object at the selected question index
                 Questions question = questions[currentQuestionIndex];
 
-                // Shuffle the options for the current question
-                ShuffleOptions(question.Options);
+                //LoadQuestionsFromDatabase();
 
-                // Add the data to the form elements
-                lblQuestion.Text = question.Question;
-                btnAnswerA.Text = question.Options[0];
-                btnAnswerB.Text = question.Options[1];
-                btnAnswerC.Text = question.Options[2];
-                btnAnswerD.Text = question.Options[3];
+                // Check if the question shown is equal to the randomrumber (so special question) and if the randomnumber is not 0 (default number)
+                if (currentQuestionIndex == randomNumber && randomNumber != 0)
+                {
+                    specialQuestionIsActive = true;
+
+                    lblQuestion.Text = question.Question + randomNumber + currentQuestionIndex;
+
+                    ShuffleOptions(question.Options);
+                    // Add the data to the form elements
+                    lblQuestion.Text = question.Question;
+                    btnAnswerA.Text = question.Options[0];
+                    btnAnswerB.Text = question.Options[1];
+                    btnAnswerC.Text = question.Options[2];
+                    btnAnswerD.Text = question.Options[3];
+
+                    // Design
+                    btnAnswerA.BackColor = Color.HotPink;
+                    btnAnswerB.BackColor = Color.HotPink;
+                    btnAnswerC.BackColor = Color.HotPink;
+                    btnAnswerD.BackColor = Color.HotPink;
+                    lblQuestion.ForeColor = Color.HotPink;
+                    pbxSpecialQuestion.Image = Properties.Resources.burbuja_rosada;
+
+
+                    // Play sound
+                    if (specialQuestionIsActive == true)
+                    {
+                        player = new SoundPlayer(soundFilePath);
+                        player.Play();
+                    }
+                }
+                else
+                {
+                    // Stop playing sound
+                    player = new SoundPlayer(soundFilePath);
+                    player.Stop();
+
+                    if (removeUsed == true)
+                    {
+                        lblQuestion.Text = question.Question + randomNumber + currentQuestionIndex;
+
+                        btnAnswerA.Text = question.CorrectAnswer;
+                        btnAnswerB.Text = question.Options[1];
+                    }
+                    else
+                    {
+                        // Make sure all buttons are enabled
+                        btnAnswerC.Enabled = true;
+                        btnAnswerD.Enabled = true; ;
+
+                        ShuffleOptions(question.Options);
+                        // Add the data to the form elements
+                        lblQuestion.Text = question.Question + randomNumber + currentQuestionIndex;
+                        btnAnswerA.Text = question.Options[0];
+                        btnAnswerB.Text = question.Options[1];
+                        btnAnswerC.Text = question.Options[2];
+                        btnAnswerD.Text = question.Options[3];
+                    }
+                }
             }
             else
             {
                 // Show a MessageBox saying the quiz has been completed (unlikely)
                 MessageBox.Show("Quiz completed! Your end score: " + currentScore + " points");
                 tmrTimeLeft.Stop();
+                btnAnswerA.Enabled = false;
+                btnAnswerB.Enabled = false;
+                btnAnswerC.Enabled = false;
+                btnAnswerD.Enabled = false;
                 SetScore();
             }
         }
@@ -175,51 +258,15 @@ namespace QuizMester21sept2023
                 using (SqlCommand cmd = new SqlCommand("INSERT INTO QuizRankings (rankingID, userID, quizID, score, dateDone) VALUES (@rankingID, @userID, @quizID, @score, @dateDone)", cn))
                 {
                     cmd.Parameters.AddWithValue("@rankingID", maxNumber);
-                    cmd.Parameters.AddWithValue("@userID", Convert.ToInt32(dt.Rows[0]["userID"]));
+                    cmd.Parameters.AddWithValue("@userID", "-");
                     cmd.Parameters.AddWithValue("@quizID", "-");
                     cmd.Parameters.AddWithValue("@score", currentScore);
                     cmd.Parameters.AddWithValue("@dateDone", DateTime.Now);
 
                     cmd.ExecuteNonQuery(); // Execute the INSERT statement
                 }
-            }
-                //string connectionString = "Data Source=localhost\\sqlexpress;Initial Catalog=QuizMesterDatabase;Integrated Security=True";
-
-                //using (SqlConnection cn = new SqlConnection(connectionString))
-                //{
-                //    if (cn.State == ConnectionState.Closed)
-                //    {
-                //        cn.Open();
-                //    }
-
-
-                //    //Use Datatable
-                //    using (dt = new DataTable("QuizRankings"))
-                //    {
-                //        ////For a new Rankingid fisrt search for current maximum Rankingid
-                //        using (SqlCommand cmd = new SqlCommand("SELECT MAX(rankingID) FROM QuizRankings", cn))
-                //        {
-                //            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-
-                //            //Get a new Userid
-                //            maxNumber = Convert.ToInt32(cmd.ExecuteScalar()) + 1;
-                //        }
-
-                //        //Use the new maxNumber as new Rankingid in an INSERT statement for the new ranking
-                //        using (SqlCommand cmd = new SqlCommand("INSERT INTO QuizRankings(rankingID, userID, quizID, score, dateDone) VALUES (@rankingID, @userID, @quizID, @score, @dateDone)", cn))
-                //        {
-                //            cmd.Parameters.AddWithValue("rankingID", maxNumber);
-                //            cmd.Parameters.AddWithValue("userID", "-");
-                //            cmd.Parameters.AddWithValue("quizID", "-");
-                //            cmd.Parameters.AddWithValue("score", currentScore);
-                //            cmd.Parameters.AddWithValue("dateDone", DateTime.Now);
-                //            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                //            adapter.Fill(dt);
-                //        }
-                //    }
-                //}
-
-            }
+            }      
+        }
 
         private void ShuffleOptions(List<string> options)
         {
@@ -251,15 +298,10 @@ namespace QuizMester21sept2023
                 tmrTimeLeft.Stop();
                 // Show a message saying the time has ran out
                 MessageBox.Show("Time's up, game over Your end score: " + currentScore + " points");
-
-                //tmrTimeLeft.Stop();
-                //// Hide the quiz panel, display the data behind it
-                //pnlQuizFinished.Visible = false;
-                //// Add the user's data into the quiz' final data
-                //lblUsername.Text = _username + "'s score";
-                //lblFinalScore.Text = "Final score: " + currentScore.ToString();
-                //lblCorrectAnswers.Text = "Correct answers: " + correctAnswers.ToString();
-                //lblWrongAnswers.Text = "Wrong answers: " + wrongAnswers.ToString();
+                btnAnswerA.Enabled = false;
+                btnAnswerB.Enabled = false;
+                btnAnswerC.Enabled = false;
+                btnAnswerD.Enabled = false;
             }
         }
 
@@ -313,15 +355,31 @@ namespace QuizMester21sept2023
             // Check if the answer was correct by getting the .CorrectAnswer value and comparing
             if (selectedAnswer == questions[currentQuestionIndex].CorrectAnswer)
             {
-                // Increment the user's current score by 1 points
-                currentScore++;
-                // Add the user's current score into the score label (convert int to string)
-                lblCurrentScore.Text = currentScore.ToString();
-                // Display how many points the user got underneath the score indicator
-                lblScoreIndicator.Text = "+ 1";
-                lblScoreIndicator.ForeColor = Color.Green;
-                // Increment the user's correct answers by 1
-                correctAnswers += 1;
+                if (currentQuestionIndex == randomNumber)
+                {
+                    // Increment the user's current score by 15 points (special question
+                    currentScore = currentScore + 15;
+                    // Add the user's current score into the score label (convert int to string)
+                    lblCurrentScore.Text = currentScore.ToString();
+                    // Display how many points the user got underneath the score indicator
+                    lblScoreIndicator.Text = "+ 15";
+                    lblScoreIndicator.ForeColor = Color.HotPink;
+                    // Increment the user's correct answers by 1
+                    correctAnswers += 1;
+                }
+                else
+                {
+                    // Increment the user's current score by 1 points
+                    currentScore++;
+                    // Add the user's current score into the score label (convert int to string)
+                    lblCurrentScore.Text = currentScore.ToString();
+                    // Display how many points the user got underneath the score indicator
+                    lblScoreIndicator.Text = "+ 1";
+                    lblScoreIndicator.ForeColor = Color.Green;
+                    // Increment the user's correct answers by 1
+                    correctAnswers += 1;
+                }
+                   
             }
             else
             {
@@ -341,6 +399,28 @@ namespace QuizMester21sept2023
             currentQuestionIndex++;
 
             DisplayQuestion();
+        }
+
+        private void btnRemoveTwoQuestions_Click(object sender, EventArgs e)
+        {
+            removeUsed = true;
+
+            // Disable the two incorrect answer buttons
+            btnAnswerC.Enabled = false;
+            btnAnswerD.Enabled = false;
+
+            // Call the function to display the next question
+            DisplayQuestion();
+
+            removeUsed = false;
+            btnRemoveTwoQuestions.Enabled = false;
+
+        }
+
+        private void btnSpecialQuiz_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            specialQuizForm.Show();
         }
     }
 }

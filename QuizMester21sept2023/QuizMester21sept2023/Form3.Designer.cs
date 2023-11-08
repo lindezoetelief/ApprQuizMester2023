@@ -38,6 +38,10 @@
             this.lblScoreIndicator = new System.Windows.Forms.Label();
             this.lblTimeLeft = new System.Windows.Forms.Label();
             this.tmrTimeLeft = new System.Windows.Forms.Timer(this.components);
+            this.btnRemoveTwoQuestions = new System.Windows.Forms.Button();
+            this.pbxSpecialQuestion = new System.Windows.Forms.PictureBox();
+            this.btnSpecialQuiz = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.pbxSpecialQuestion)).BeginInit();
             this.SuspendLayout();
             // 
             // lblQuestion
@@ -71,7 +75,7 @@
             this.btnAnswerB.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAnswerB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAnswerB.ForeColor = System.Drawing.Color.Ivory;
-            this.btnAnswerB.Location = new System.Drawing.Point(140, 296);
+            this.btnAnswerB.Location = new System.Drawing.Point(432, 231);
             this.btnAnswerB.Name = "btnAnswerB";
             this.btnAnswerB.Size = new System.Drawing.Size(203, 39);
             this.btnAnswerB.TabIndex = 9;
@@ -85,7 +89,7 @@
             this.btnAnswerC.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAnswerC.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAnswerC.ForeColor = System.Drawing.Color.Ivory;
-            this.btnAnswerC.Location = new System.Drawing.Point(432, 231);
+            this.btnAnswerC.Location = new System.Drawing.Point(140, 296);
             this.btnAnswerC.Name = "btnAnswerC";
             this.btnAnswerC.Size = new System.Drawing.Size(203, 39);
             this.btnAnswerC.TabIndex = 10;
@@ -142,12 +146,45 @@
             this.tmrTimeLeft.Interval = 1000;
             this.tmrTimeLeft.Tick += new System.EventHandler(this.tmrTimeLeft_Tick);
             // 
+            // btnRemoveTwoQuestions
+            // 
+            this.btnRemoveTwoQuestions.Location = new System.Drawing.Point(475, 367);
+            this.btnRemoveTwoQuestions.Name = "btnRemoveTwoQuestions";
+            this.btnRemoveTwoQuestions.Size = new System.Drawing.Size(160, 23);
+            this.btnRemoveTwoQuestions.TabIndex = 15;
+            this.btnRemoveTwoQuestions.Text = "Remove Two questions";
+            this.btnRemoveTwoQuestions.UseVisualStyleBackColor = true;
+            this.btnRemoveTwoQuestions.Click += new System.EventHandler(this.btnRemoveTwoQuestions_Click);
+            // 
+            // pbxSpecialQuestion
+            // 
+            this.pbxSpecialQuestion.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pbxSpecialQuestion.Enabled = false;
+            this.pbxSpecialQuestion.InitialImage = null;
+            this.pbxSpecialQuestion.Location = new System.Drawing.Point(-10, -7);
+            this.pbxSpecialQuestion.Name = "pbxSpecialQuestion";
+            this.pbxSpecialQuestion.Size = new System.Drawing.Size(818, 476);
+            this.pbxSpecialQuestion.TabIndex = 16;
+            this.pbxSpecialQuestion.TabStop = false;
+            // 
+            // btnSpecialQuiz
+            // 
+            this.btnSpecialQuiz.Location = new System.Drawing.Point(599, 36);
+            this.btnSpecialQuiz.Name = "btnSpecialQuiz";
+            this.btnSpecialQuiz.Size = new System.Drawing.Size(135, 23);
+            this.btnSpecialQuiz.TabIndex = 17;
+            this.btnSpecialQuiz.Text = "Special quiz";
+            this.btnSpecialQuiz.UseVisualStyleBackColor = true;
+            this.btnSpecialQuiz.Click += new System.EventHandler(this.btnSpecialQuiz_Click);
+            // 
             // Form3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Ivory;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnSpecialQuiz);
+            this.Controls.Add(this.btnRemoveTwoQuestions);
             this.Controls.Add(this.lblTimeLeft);
             this.Controls.Add(this.lblScoreIndicator);
             this.Controls.Add(this.lblCurrentScore);
@@ -156,9 +193,11 @@
             this.Controls.Add(this.btnAnswerB);
             this.Controls.Add(this.btnAnswerA);
             this.Controls.Add(this.lblQuestion);
+            this.Controls.Add(this.pbxSpecialQuestion);
             this.Name = "Form3";
             this.Text = "Form3";
             this.Load += new System.EventHandler(this.Form3_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.pbxSpecialQuestion)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -174,5 +213,8 @@
         private System.Windows.Forms.Label lblScoreIndicator;
         private System.Windows.Forms.Label lblTimeLeft;
         private System.Windows.Forms.Timer tmrTimeLeft;
+        private System.Windows.Forms.Button btnRemoveTwoQuestions;
+        private System.Windows.Forms.PictureBox pbxSpecialQuestion;
+        private System.Windows.Forms.Button btnSpecialQuiz;
     }
 }
