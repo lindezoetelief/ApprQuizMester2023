@@ -40,6 +40,10 @@ namespace QuizMester21sept2023
         // Get the questions from a class (Question.cs) and the database
         private List<Questions> questions = new List<Questions>();
 
+        private Database db;
+
+        int userID = 0;
+
         // Get random number for the special question, between 1 and 21
         Random random = new Random();
         int randomNumber = 0;
@@ -47,13 +51,17 @@ namespace QuizMester21sept2023
         //Forms
         Form5 specialQuizForm = new Form5();
 
+        int loggedinUserID;
+
         private int currentQuestionIndex = 0;
 
-        public Form3()
+        public Form3(int userID)
         {
             InitializeComponent();
             LoadQuestionsFromDatabase();
             DisplayQuestion();
+
+            loggedinUserID = userID;
         }
 
         private void Form3_Load(object sender, EventArgs e)
@@ -168,7 +176,7 @@ namespace QuizMester21sept2023
                 {
                     specialQuestionIsActive = true;
 
-                    lblQuestion.Text = question.Question + randomNumber + currentQuestionIndex;
+                    lblQuestion.Text = question.Question;
 
                     ShuffleOptions(question.Options);
                     // Add the data to the form elements
@@ -202,7 +210,7 @@ namespace QuizMester21sept2023
 
                     if (removeUsed == true)
                     {
-                        lblQuestion.Text = question.Question + randomNumber + currentQuestionIndex;
+                        lblQuestion.Text = question.Question;
 
                         btnAnswerA.Text = question.CorrectAnswer;
                         btnAnswerB.Text = question.Options[1];
@@ -215,7 +223,7 @@ namespace QuizMester21sept2023
 
                         ShuffleOptions(question.Options);
                         // Add the data to the form elements
-                        lblQuestion.Text = question.Question + randomNumber + currentQuestionIndex;
+                        lblQuestion.Text = question.Question;
                         btnAnswerA.Text = question.Options[0];
                         btnAnswerB.Text = question.Options[1];
                         btnAnswerC.Text = question.Options[2];
@@ -233,6 +241,10 @@ namespace QuizMester21sept2023
                 btnAnswerC.Enabled = false;
                 btnAnswerD.Enabled = false;
                 SetScore();
+
+                this.Hide();
+                Form4 highscoreForm = new Form4();
+                highscoreForm.Show();
             }
         }
 
@@ -254,18 +266,19 @@ namespace QuizMester21sept2023
                     maxNumber = Convert.ToInt32(cmd.ExecuteScalar()) + 1;
                 }
 
+
                 // Use the new maxNumber as the rankingID in an INSERT statement for the new ranking
                 using (SqlCommand cmd = new SqlCommand("INSERT INTO QuizRankings (rankingID, userID, quizID, score, dateDone) VALUES (@rankingID, @userID, @quizID, @score, @dateDone)", cn))
                 {
                     cmd.Parameters.AddWithValue("@rankingID", maxNumber);
-                    cmd.Parameters.AddWithValue("@userID", "-");
+                    cmd.Parameters.AddWithValue("@userID", loggedinUserID);
                     cmd.Parameters.AddWithValue("@quizID", "-");
                     cmd.Parameters.AddWithValue("@score", currentScore);
                     cmd.Parameters.AddWithValue("@dateDone", DateTime.Now);
 
                     cmd.ExecuteNonQuery(); // Execute the INSERT statement
                 }
-            }      
+            }
         }
 
         private void ShuffleOptions(List<string> options)
@@ -302,6 +315,12 @@ namespace QuizMester21sept2023
                 btnAnswerB.Enabled = false;
                 btnAnswerC.Enabled = false;
                 btnAnswerD.Enabled = false;
+
+                SetScore();
+                this.Hide();
+                Form4 highscoreForm = new Form4();
+                highscoreForm.Show();
+
             }
         }
 

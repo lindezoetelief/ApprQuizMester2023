@@ -134,7 +134,7 @@
             // lblTimeLeft
             // 
             this.lblTimeLeft.AutoSize = true;
-            this.lblTimeLeft.Location = new System.Drawing.Point(59, 384);
+            this.lblTimeLeft.Location = new System.Drawing.Point(59, 376);
             this.lblTimeLeft.Name = "lblTimeLeft";
             this.lblTimeLeft.Size = new System.Drawing.Size(32, 16);
             this.lblTimeLeft.TabIndex = 14;
@@ -148,12 +148,16 @@
             // 
             // btnRemoveTwoQuestions
             // 
+            this.btnRemoveTwoQuestions.BackColor = System.Drawing.Color.LightSeaGreen;
+            this.btnRemoveTwoQuestions.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRemoveTwoQuestions.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRemoveTwoQuestions.ForeColor = System.Drawing.Color.Ivory;
             this.btnRemoveTwoQuestions.Location = new System.Drawing.Point(475, 367);
             this.btnRemoveTwoQuestions.Name = "btnRemoveTwoQuestions";
-            this.btnRemoveTwoQuestions.Size = new System.Drawing.Size(160, 23);
+            this.btnRemoveTwoQuestions.Size = new System.Drawing.Size(160, 33);
             this.btnRemoveTwoQuestions.TabIndex = 15;
             this.btnRemoveTwoQuestions.Text = "Remove Two questions";
-            this.btnRemoveTwoQuestions.UseVisualStyleBackColor = true;
+            this.btnRemoveTwoQuestions.UseVisualStyleBackColor = false;
             this.btnRemoveTwoQuestions.Click += new System.EventHandler(this.btnRemoveTwoQuestions_Click);
             // 
             // pbxSpecialQuestion
@@ -169,12 +173,16 @@
             // 
             // btnSpecialQuiz
             // 
+            this.btnSpecialQuiz.BackColor = System.Drawing.Color.LightSeaGreen;
+            this.btnSpecialQuiz.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSpecialQuiz.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSpecialQuiz.ForeColor = System.Drawing.Color.Ivory;
             this.btnSpecialQuiz.Location = new System.Drawing.Point(599, 36);
             this.btnSpecialQuiz.Name = "btnSpecialQuiz";
-            this.btnSpecialQuiz.Size = new System.Drawing.Size(135, 23);
+            this.btnSpecialQuiz.Size = new System.Drawing.Size(135, 37);
             this.btnSpecialQuiz.TabIndex = 17;
             this.btnSpecialQuiz.Text = "Special quiz";
-            this.btnSpecialQuiz.UseVisualStyleBackColor = true;
+            this.btnSpecialQuiz.UseVisualStyleBackColor = false;
             this.btnSpecialQuiz.Click += new System.EventHandler(this.btnSpecialQuiz_Click);
             // 
             // Form3

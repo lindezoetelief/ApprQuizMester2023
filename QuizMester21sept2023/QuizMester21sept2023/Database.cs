@@ -18,6 +18,8 @@ namespace QuizMester21sept2023
         string connectionString = "Data Source=localhost\\sqlexpress;Initial Catalog=QuizMesterDatabase;Integrated Security=True";
 
         private bool executeOke = false;
+        public int UserID = 0;
+
 
         string username = "";
         string password = "";
@@ -65,8 +67,13 @@ namespace QuizMester21sept2023
             else
             {
                 executeOke = true;
+                UserID = (int)dt.Rows[0]["userID"];
             }
             return executeOke;
+        }
+        public int GetUserID()
+        {
+            return UserID;
         }
 
         public void GetRegister()
@@ -132,6 +139,7 @@ namespace QuizMester21sept2023
                         }
                     }
                 }
+                UserID = maxNumber;
             }
             else
             {

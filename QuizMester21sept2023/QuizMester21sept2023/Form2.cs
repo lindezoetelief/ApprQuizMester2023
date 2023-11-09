@@ -18,7 +18,6 @@ namespace QuizMester21sept2023
 
         //Forms
         Form1 loginForm = null;
-        Form3 playForm = new Form3();
         //Form4 highscoreForm = new Form4();
 
         public Form2(Form1 c_loginForm)
@@ -39,6 +38,7 @@ namespace QuizMester21sept2023
                 if (item.RegisterLogin() == true)
                 {
                     this.Hide();
+                    Form3 playForm = new Form3(item.GetUserID());
                     playForm.Show();
                 }
             }
