@@ -38,20 +38,16 @@ namespace QuizMester21sept2023
 
         private void Form5_Load(object sender, EventArgs e)
         {
+            // Design
             lblQuestion.MaximumSize = new Size(350, 0);
-
             lblQuestion.AutoSize = true;
-
             lblQuestion.TextAlign = ContentAlignment.MiddleCenter;
-
             lblQuestion.Left = this.Width / 2 - (lblQuestion.Width / 2);
-
             lblQuestion.Top = btnAnswerA.Top - lblQuestion.Height - 20;
 
             //Always start at 0 seconds
             tmrTimeCounter.Stop();
             timeCount = 0;
-
             
             lblTimeIndicator.Text = "";
             lblTimeCounter.Text = timeCount.ToString();
@@ -116,7 +112,7 @@ namespace QuizMester21sept2023
 
                 ShuffleOptions(question.Options);
                 // Add the data to the form elements
-                lblQuestion.Text = question.Question + currentQuestionIndex;
+                lblQuestion.Text = question.Question;
                 btnAnswerA.Text = question.Options[0];
                 btnAnswerB.Text = question.Options[1];
                 btnAnswerC.Text = question.Options[2];
@@ -136,6 +132,7 @@ namespace QuizMester21sept2023
 
         private void ShuffleOptions(List<string> options)
         {
+            // Shuffle answers so correct answer is in a random place (A, B, C or D) each time
             Random rng = new Random();
             int n = options.Count;
 

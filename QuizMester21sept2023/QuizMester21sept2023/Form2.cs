@@ -12,13 +12,10 @@ namespace QuizMester21sept2023
 {
     public partial class Form2 : Form
     {
-
-
         List<Database> databaseList = null;
 
-        //Forms
+        //Form
         Form1 loginForm = null;
-        //Form4 highscoreForm = new Form4();
 
         public Form2(Form1 c_loginForm)
         {
@@ -31,6 +28,7 @@ namespace QuizMester21sept2023
             databaseList = new List<Database>();
             databaseList.Add(new Database(tbxUsernameRegister.Text, tbxPasswordRegister.Text));
 
+            // Check if username excist or not, if it doesn't make a new user and log in
             foreach (Database item in databaseList)
             {
                 item.GetRegister();
@@ -46,6 +44,7 @@ namespace QuizMester21sept2023
 
         private void btnGoToLogin_Click(object sender, EventArgs e)
         {
+            // Switch forms
             this.Hide();
             loginForm.Show();
         }

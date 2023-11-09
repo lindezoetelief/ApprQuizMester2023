@@ -52,10 +52,10 @@ namespace QuizMester21sept2023
                         // Iterate through the rows in the DataTable and append user IDs and scores with a rank to the RichTextBox
                         for (int i = 0; i < dataTable.Rows.Count; i++)
                         {
-                            //Use DataTable
+                            // Use DataTable
                             using (dt = new DataTable("Users"))
                             {
-                                //Search for username to check if it already exist
+                                // Search for userID to check link it with a username
                                 using (SqlCommand cmd = new SqlCommand("SELECT * from Users where userID = @userID; ", connection))
                                 {
                                     cmd.Parameters.AddWithValue("userID", dataTable.Rows[i]["userID"]);
